@@ -1,4 +1,4 @@
-import GetRoutes from "@/Routes/GetRoutes";
+import GetRoutes from "@/Routes/PublicRouter";
 
 
 function App() {

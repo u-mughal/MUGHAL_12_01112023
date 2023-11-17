@@ -3,15 +3,16 @@ import HomePage from '@/Pages/Home';
 import Error from '@/Pages/Error';
 import Profil from '@/Pages/Profil';
 
-function GetRoutes(){
+function PublicRouter(){
 
   return (
     <Routes>
       <Route path="/" element= {<HomePage/>}/>
-      <Route path="/*" element={<Error/>}/>
       <Route path="/Profil" element={<Profil/>}/>
+      <Route path="/Profil/:id" element={<Profil/>}/>
+      <Route path="/*" element={<Error/>}/>
     </Routes>
   );
 }
 
-export default GetRoutes;
+export default PublicRouter;
