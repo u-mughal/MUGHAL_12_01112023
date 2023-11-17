@@ -1,5 +1,5 @@
-import { fetchData } from './CallApi';
-import datas from '../datas/datasMocked.json';
+import { fetchData } from '@/CallApi';
+import datas from '@/Data/MockedData.json';
 
 export async function getDatasSection(mock, userId, apiCall) {
   const API_URL = "http://localhost:3000";
