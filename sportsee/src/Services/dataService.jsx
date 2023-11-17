@@ -1,4 +1,4 @@
-import { fetchData } from '@/CallApi';
+import { fetchData } from './CallApi';
 import datas from '@/Data/MockedData.json';
 
 export async function getDatasSection(mock, userId, apiCall) {
