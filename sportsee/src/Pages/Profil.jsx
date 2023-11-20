@@ -3,7 +3,7 @@ import Sidebar from "@/Components/Sidebar";
 import { useEffect, useState } from "react";
 import { getDatasSection } from '@/Services/dataService'; 
 import { useParams } from "react-router-dom";
-import Barschart from '@/Components/Recharts/Barschart';
+import Barschart from '@/ComponentsRecharts/BarChart';
 import iconCalories from '@/Icones/energy.svg';
 import iconCarbs from '@/Icones/apple.svg';
 import iconProtein from '@/Icones/chicken.svg';
