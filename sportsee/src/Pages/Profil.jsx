@@ -3,13 +3,13 @@ import Sidebar from "@/Components/Sidebar";
 import { useEffect, useState } from "react";
 import { getDatasSection } from '@/Services/dataService'; 
 import { useParams } from "react-router-dom";
-import Barschart from '@/ComponentsRecharts/BarChart';
+import BarChart from '@/ComponentsRecharts/BarChart';
 import iconCalories from '@/Icones/energy.svg';
 import iconCarbs from '@/Icones/apple.svg';
 import iconProtein from '@/Icones/chicken.svg';
 import iconFat from '@/Icones/cheeseburger.svg';
 import Cards from "@/Components/Card";
-import Linechart from '@/ComponentsRecharts/LineChart';
+import LineChart from '@/ComponentsRecharts/LineChart';
 
 
 function Profil () {
@@ -44,7 +44,7 @@ function Profil () {
 
   const idUser = useParams().id;
   const [isDataLoading, setDataLoading] = useState(true);
-  const [apiStatut] = useState(false);
+  const [apiStatut] = useState(true);
   console.log("userid", idUser, "datas 22", datas);
 
 
@@ -79,8 +79,13 @@ function Profil () {
       <Header/>
       <Sidebar/>
       <main>
-        <Barschart data = {datas?.activitiesDatas?.sessions}/>
-        <Linechart data = {datas?.averageDatas?.sessions}/>
+        <div>
+          <p>Bonjour <span>{datas?.userDatas?.userInfos?.firstName}</span></p>
+          <p>Félicitation ! Vous avez explosé vos objectifs hier <span>👏</span></p>
+
+        </div>
+        <BarChart data = {datas?.activitiesDatas?.sessions}/>
+        <LineChart data = {datas?.averageDatas?.sessions}/>
         <div className = "cards">
           <div>
             {cardData.map((card, index) => (
