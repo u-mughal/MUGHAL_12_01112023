@@ -9,14 +9,11 @@ import iconCarbs from '@/Icones/apple.svg';
 import iconProtein from '@/Icones/chicken.svg';
 import iconFat from '@/Icones/cheeseburger.svg';
 import Cards from "@/Components/Card";
+import Linechart from '@/ComponentsRecharts/LineChart';
 
 
 function Profil () {
-  const idUser = useParams().id;
   const [datas, setDatas] = useState(null);
-  const [isDataLoading, setDataLoading] = useState(true);
-  const [apiStatut] = useState(false);
-  console.log("userid", idUser, "datas 22", datas);
 
   const cardData = [
     {
@@ -44,6 +41,12 @@ function Profil () {
       unit: "g",
     },
   ];
+
+  const idUser = useParams().id;
+  const [isDataLoading, setDataLoading] = useState(true);
+  const [apiStatut] = useState(false);
+  console.log("userid", idUser, "datas 22", datas);
+
 
   useEffect(() => {
     const url = "http://localhost:3000";
@@ -77,6 +80,7 @@ function Profil () {
       <Sidebar/>
       <main>
         <Barschart data = {datas?.activitiesDatas?.sessions}/>
+        <Linechart data = {datas?.averageDatas?.sessions}/>
         <div className = "cards">
           <div>
             {cardData.map((card, index) => (
