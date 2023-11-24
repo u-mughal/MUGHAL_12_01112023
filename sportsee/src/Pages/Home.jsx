@@ -1,19 +1,9 @@
-import { useContext } from "react";
-import { StatutApiContext } from "@/Routes/PublicRouter";
 import { Link } from "react-router-dom";
 
-function Home() {
-  const { apiStatut, statutApiModifiable } = useContext(StatutApiContext);
+function HomePage() {
   
-  const turnStatutApi = () => {
-    statutApiModifiable(!apiStatut);
-  };
-
   return (
     <div className="buttons-container">
-      <button className="button-api" onClick={turnStatutApi}>
-        {apiStatut ? "API" : "Version Mocké"}
-      </button>
       <div>
         <Link to="/Profil/12"><button>Utilisateur 12</button></Link>  
         <Link to="/Profil/18"><button>Utilisateur 18</button></Link>
@@ -22,4 +12,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
