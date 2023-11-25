@@ -11,6 +11,7 @@ import iconFat from '@/Icones/cheeseburger.svg';
 import Cards from "@/Components/Card";
 import LineChart from '@/ComponentsRecharts/LineChart';
 import ErrorMessage from '@/ComponentsRecharts/ErrorMessage';
+import RadarChart from "@/ComponentsRecharts/RadarChart";
 import PieChart from "@/ComponentsRecharts/PieChart";
 
 
@@ -80,6 +81,7 @@ function Profil () {
           <div className="main-left-container">
             <BarChart className ="barchart-container" data = {datas?.activitiesDatas?.sessions}/>
             <LineChart data = {datas?.averageDatas?.sessions}/>
+            <RadarChart data = {datas?.performancesDatas?.dataPerformance}/>
             <PieChart data = {datas?.userDatas?.score}/>
           </div>
           <div className = "cards">
