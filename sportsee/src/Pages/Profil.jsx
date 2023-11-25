@@ -11,6 +11,8 @@ import iconFat from '@/Icones/cheeseburger.svg';
 import Cards from "@/Components/Card";
 import LineChart from '@/ComponentsRecharts/LineChart';
 import ErrorMessage from '@/ComponentsRecharts/ErrorMessage';
+import PieChart from "@/ComponentsRecharts/PieChart";
+
 
 function Profil () {
   const [datas, setDatas] = useState(null);
@@ -78,6 +80,7 @@ function Profil () {
           <div className="main-left-container">
             <BarChart className ="barchart-container" data = {datas?.activitiesDatas?.sessions}/>
             <LineChart data = {datas?.averageDatas?.sessions}/>
+            <PieChart data = {datas?.userDatas?.score}/>
           </div>
           <div className = "cards">
             {cardData.map((card, index) => (
