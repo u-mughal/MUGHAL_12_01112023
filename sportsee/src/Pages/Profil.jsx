@@ -12,7 +12,7 @@ import Cards from "@/Components/Card";
 import LineChart from '@/ComponentsRecharts/LineChart';
 import ErrorMessage from '@/ComponentsRecharts/ErrorMessage';
 import RadarChart from "@/ComponentsRecharts/RadarChart";
-import PieChart from "@/ComponentsRecharts/PieChart";
+import RadialBarChart from "@/ComponentsRecharts/RadialBarChart";
 
 
 function Profil () {
@@ -80,9 +80,11 @@ function Profil () {
         <div className="container-profil">
           <div className="main-left-container">
             <BarChart className ="barchart-container" data = {datas?.activitiesDatas?.sessions}/>
-            <LineChart data = {datas?.averageDatas?.sessions}/>
-            <RadarChart data = {datas?.performancesDatas?.dataPerformance}/>
-            <PieChart data = {datas?.userDatas?.score}/>
+            <div className="container-line-radar-radial">
+              <LineChart className ="linechart-container" data = {datas?.averageDatas?.sessions}/>
+              <RadarChart className ="radarchart-container" data = {datas?.performancesDatas?.dataPerformance}/>
+              <RadialBarChart className="radialbarchart-container" data = {datas?.userDatas?.score}/>
+            </div>
           </div>
           <div className = "cards">
             {cardData.map((card, index) => (
