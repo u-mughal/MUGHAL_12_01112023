@@ -4,15 +4,12 @@ import { useEffect, useState } from "react";
 import { getDatasSection } from '@/Services/dataService'; 
 import { useParams } from "react-router-dom";
 import BarChart from '@/ComponentsRecharts/BarChart';
-import iconCalories from '@/Icones/energy.svg';
-import iconCarbs from '@/Icones/apple.svg';
-import iconProtein from '@/Icones/chicken.svg';
-import iconFat from '@/Icones/cheeseburger.svg';
-import Cards from "@/Components/Card";
+import Cards from "@/Components/Cards";
 import LineChart from '@/ComponentsRecharts/LineChart';
 import ErrorMessage from '@/ComponentsRecharts/ErrorMessage';
 import RadarChart from "@/ComponentsRecharts/RadarChart";
 import RadialBarChart from "@/ComponentsRecharts/RadialBarChart";
+import { dataCard } from "@/Components/Utils/dataCard";
 
 
 function Profil () {
@@ -21,10 +18,13 @@ function Profil () {
   const [isDataLoading, setDataLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  // eslint-disable-next-line no-unused-vars, no-undef
+  const [kindData, setKindData] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedData = await getDatasSection(idUser);
+        const fetchedData = await getDatasSection(idUser, kindData);
         setDatas(fetchedData);
       } catch (err) {
         setErrorMessage(err.message || "An unknown error occurred.");
@@ -34,6 +34,7 @@ function Profil () {
     };
   
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idUser]);
 
   if (errorMessage) {
@@ -41,33 +42,7 @@ function Profil () {
   }
 
   if (isDataLoading) return null; 
-  
-  const cardData = [
-    {
-      icon: iconCalories,
-      number: datas?.userDatas?.keyData?.calorieCount,
-      type: "Calories",
-      unit: "kCal",
-    },
-    {
-      icon: iconProtein,
-      number: datas?.userDatas?.keyData?.proteinCount,
-      type: "Proteines",
-      unit: "g",
-    },
-    {
-      icon: iconCarbs,
-      number: datas?.userDatas?.keyData?.carbohydrateCount,
-      type: "Glucides",
-      unit: "g",
-    },
-    {
-      icon: iconFat,
-      number: datas?.userDatas?.keyData?.lipidCount,
-      type: "Lipides",
-      unit: "g",
-    },
-  ];
+
   return (
     <div>
       <Header/>
@@ -79,7 +54,7 @@ function Profil () {
         </div>
         <div className="container-profil">
           <div className="main-left-container">
-            <BarChart className ="barchart-container" data = {datas?.activitiesDatas?.sessions}/>
+          <BarChart className ="barchart-container" data = {datas?.activitiesDatas?.sessions}/>
             <div className="container-line-radar-radial">
               <LineChart className ="linechart-container" data = {datas?.averageDatas?.sessions}/>
               <RadarChart className ="radarchart-container" data = {datas?.performancesDatas?.dataPerformance}/>
@@ -87,13 +62,14 @@ function Profil () {
             </div>
           </div>
           <div className = "cards">
-            {cardData.map((card, index) => (
+            {dataCard(datas).map((card, index) => (
               <Cards
                 key={index}
                 icon={card.icon} 
                 number={card.number} 
                 type={card.type} 
                 unit={card.unit} 
+                color={card.color}
               />
             ))}
           </div>
