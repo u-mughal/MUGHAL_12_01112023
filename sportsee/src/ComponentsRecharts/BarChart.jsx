@@ -56,7 +56,7 @@ function CustonBarChart({data}) {
   const calorieDomain = [0, maxKilogram * 2];
 
   return (
-    <div style={{ backgroundColor: '#FBFBFB', padding: '10px', width: '700px', height: '230px', aspectRatio: '16/9' }}>
+    <div style={{ backgroundColor: '#FBFBFB', padding: '10px 10px 2px 10px', width: '700px', height: '230px', aspectRatio: '16/9' }}>
 
       <ResponsiveContainer
         width={"100%"}
@@ -101,8 +101,8 @@ function CustonBarChart({data}) {
             verticalAlign="top"
             wrapperStyle={{ paddingLeft: '40px', top:"0px" }}
             payload={[
-              { value: 'kilogram', type: 'circle', id: 'ID01', color: '#282D3' },
-              { value: 'calories', type: 'circle', id: 'ID02', color: '#ff0000' }
+              { value: 'Poids (kg)', type: 'circle', id: 'ID01', color: '#282D3' },
+              { value: 'Calories brûlées (kCal)', type: 'circle', id: 'ID02', color: '#ff0000' }
             ]}
           />
         </BarChart>
