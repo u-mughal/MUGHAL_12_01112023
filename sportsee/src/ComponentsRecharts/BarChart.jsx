@@ -40,7 +40,7 @@ function CustomBarChart({data}) {
     margin={{ top: 20, right: 30, left: 80, bottom: 5 }} 
   >
     <text x={10} y={20} fontSize={14} fontWeight="bold">
-      activitée quotidienne
+      Activité quotidienne
     </text>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="day" />
@@ -68,8 +68,8 @@ function CustomBarChart({data}) {
       hide={true}
     />
     <Tooltip />
-    <Bar radius={[5, 5, 0, 0]} yAxisId="right" dataKey="kilogram" fill="#808080" />
-    <Bar radius={[5, 5, 0, 0]} yAxisId="left" dataKey="calories" fill="#ff0000" />
+    <Bar radius={[5, 5, 0, 0]} yAxisId="right" dataKey="Poids (kg)" fill="#808080" />
+    <Bar radius={[5, 5, 0, 0]} yAxisId="left" dataKey="Calories brûlées (kCal)" fill="#ff0000" />
 
 
     <Legend 
@@ -77,8 +77,8 @@ function CustomBarChart({data}) {
       verticalAlign="top"
       wrapperStyle={{ paddingLeft: '40px' }} 
       payload={[
-        { value: 'kilogram', type: 'circle', id: 'ID01', color: '#808080' },
-        { value: 'calories', type: 'circle', id: 'ID02', color: '#ff0000' }
+        { value: 'Poids (kg)', type: 'circle', id: 'ID01', color: '#808080' },
+        { value: 'Calories brûlées (kCal)', type: 'circle', id: 'ID02', color: '#ff0000' }
       ]}
     />
   </BarChart>
