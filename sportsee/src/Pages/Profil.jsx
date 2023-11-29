@@ -12,6 +12,7 @@ import RadialBarChart from "@/ComponentsRecharts/RadialBarChart";
 import { dataCard } from "@/Components/Utils/dataCard";
 
 
+
 function Profil () {
   const [datas, setDatas] = useState(null);
   const uId = useParams().id;
@@ -20,6 +21,8 @@ function Profil () {
   
   // eslint-disable-next-line no-unused-vars, no-undef
   const [statusApi, setstatusApi] = useState(false);
+  const [tenLastDay, setTenLastDay]= useState(datas);
+
   
   
   useEffect(() => {
@@ -27,6 +30,7 @@ function Profil () {
       try {
         const fetchedData = await getDatasSection(uId, statusApi);
         setDatas(fetchedData);
+        setTenLastDay(fetchedData?.activitiesDatas?.sessions?.slice(-10));
       } catch (err) {
         setErrorMessage(err.message || "An unknown error occurred.");
       } finally {
@@ -55,7 +59,7 @@ function Profil () {
         </div>
         <div className="container-profil">
           <div className="main-left-container">
-          <BarChart className ="barchart-container" data = {datas?.activitiesDatas?.sessions}/>
+          <BarChart className ="barchart-container" data = {tenLastDay}/>
             <div className="container-line-radar-radial">
               <LineChart className ="linechart-container" data = {datas?.averageDatas?.sessions}/>
               <RadarChart className ="radarchart-container" data = {datas?.performancesDatas?.dataPerformance}/>

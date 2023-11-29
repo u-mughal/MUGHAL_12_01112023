@@ -43,14 +43,14 @@ export async function getDatasSection(uId, statusApi) {
 
   const getDatasUserPerformance = async () => {
     const { userId, kind, data } = statusApi ? await fetchData(uId, 'performance') : DataMockRetrieval('userPerformances', uId);
-    const kindFrenchArray = ["Cardio", "Energie", "Endurance", "Force", "Vitesse", "Intensité"];
-  
-    const performanceType = (indexKind) => kindFrenchArray[indexKind] || "Unknown";
-  
+    const PerformanceTypeArray = ["Cardio", "Energie", "Endurance", "Force", "Vitesse", "Intensité"]; // pour associer un tableau traduit en français des types d'exercices
+
+    const PerformanceType = (indexKind) => PerformanceTypeArray[indexKind] || "Unknown";
+
     return {
       userId,
-      performanceType: kind,
-      dataPerformance: data.map(({ value, kind }) => ({ value, performanceType: performanceType(kind - 1) }))
+      kind,
+      dataPerformance: data.map(({ value, kind }) => ({ value, kind: PerformanceType(kind-1) }))
     };
   };
   

@@ -36,7 +36,7 @@ function CustomBarChart({data}) {
   const calorieDomain = [0, maxKilogram * 2];
 
   return (
-    <div style={{ backgroundColor: '#FBFBFB', padding: '40px 10px 2px 10px', width: '100%', height: '250px', aspectRatio: '16/9' }}>
+    <div style={{ backgroundColor: '#FBFBFB', padding: '40px 2px 10px', width: '100%', height: '250px', aspectRatio: '16/9' }}>
 
       <ResponsiveContainer
         width={"100%"}
