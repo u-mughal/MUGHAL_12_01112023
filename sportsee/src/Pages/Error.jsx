@@ -1,9 +1,13 @@
-function Error () {
+function ErrorMessage({ message }) {
   return (
-    <div>
-    ERROR
+    <div className="error-message">
+      <div/>
+      <div>
+        <p>{message}</p>
+      </div>
     </div>
   );
 }
 
-export default Error;
+
+export default ErrorMessage;

@@ -1,87 +1,111 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getDatasSection } from "@/UserData/UserDataRetrieval";
 import Header from "@/Components/Header";
 import Sidebar from "@/Components/Sidebar";
-import { useEffect, useState } from "react";
-import { getDatasSection } from '@/UserData/UserDataRetrieval'; 
-import { useParams } from "react-router-dom";
-import BarChart from '@/ComponentsRecharts/BarChart';
+import Loader from "@/Components/Loader";
+import BarChart from "@/ComponentsRecharts/BarChart";
 import Cards from "@/Components/Cards";
-import LineChart from '@/ComponentsRecharts/LineChart';
-import ErrorMessage from '@/ComponentsRecharts/ErrorMessage';
+import LineChart from "@/ComponentsRecharts/LineChart";
+import ErrorMessage from "@/ComponentsRecharts/ErrorMessage";
 import RadarChart from "@/ComponentsRecharts/RadarChart";
 import RadialBarChart from "@/ComponentsRecharts/RadialBarChart";
 import { dataCard } from "@/Components/Utils/dataCard";
 
-
-
-function Profil () {
+function Profil() {
   const [datas, setDatas] = useState(null);
-  const uId = useParams().id;
+  const { id: uId } = useParams();
   const [isDataLoading, setDataLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  
-  // eslint-disable-next-line no-unused-vars, no-undef
-  const [statusApi, setstatusApi] = useState(false);
-  const [tenLastDay, setTenLastDay]= useState(datas);
+  const [statusApi, setStatusApi] = useState(false);
+  const [tenLastDay, setTenLastDay] = useState(datas);
 
-  
-  
   useEffect(() => {
     const fetchData = async () => {
+      errorMessage ? setStatusApi(false) : setStatusApi(true);
       try {
         const fetchedData = await getDatasSection(uId, statusApi);
         setDatas(fetchedData);
         setTenLastDay(fetchedData?.activitiesDatas?.sessions?.slice(-10));
       } catch (err) {
-        setErrorMessage(err.message || "An unknown error occurred.");
+        console.log('Error caught:', err.message);
+        setErrorMessage(
+          err.message !== "Network Error"
+            ? err.message
+            : "L'API est actuellement indisponible, les données sont mockées." ||
+                "Une erreur est survenue"
+        );
+        setStatusApi(false);
       } finally {
         setDataLoading(false);
       }
     };
-  
     fetchData();
-  }, [statusApi, uId]);
 
-  if (errorMessage) {
-    return <ErrorMessage message= {errorMessage}/>;
-  }
+    const errorTimeout = setTimeout(() => {
+      setErrorMessage(null);
+    }, 4000);
 
-  if (isDataLoading) return null; 
-  
+    return () => clearTimeout(errorTimeout);
+  }, [uId, statusApi, errorMessage]);
+
+  if (errorMessage) return <ErrorMessage message={errorMessage} />;
+
+  if (isDataLoading) return <Loader />;
 
   return (
     <div>
-      <Header/>
-      <Sidebar/>
-      <main>
-        <div className = "home-welcome">
-          <p className="home-welcome-p">Bonjour <span>{datas?.userDatas?.userInfos?.firstName}</span></p>
-          <p>Félicitation ! Vous avez explosé vos objectifs hier <span>👏</span></p>
-        </div>
-        <div className="container-profil">
-          <div className="main-left-container">
-          <BarChart className ="barchart-container" data = {tenLastDay}/>
-            <div className="container-line-radar-radial">
-              <LineChart className ="linechart-container" data = {datas?.averageDatas?.sessions}/>
-              <RadarChart className ="radarchart-container" data = {datas?.performancesDatas?.dataPerformance}/>
-              <RadialBarChart className="radialbarchart-container" data = {datas?.userDatas?.score}/>
+      <Header />
+      <Sidebar />
+      {!errorMessage && (
+        <main>
+          <div className="home-welcome">
+            <p className="home-welcome-p">
+              Bonjour <span>{datas?.userDatas?.userInfos?.firstName}</span>
+            </p>
+            <p>
+              Félicitation ! Vous avez explosé vos objectifs hier{" "}
+              <span>👏</span>
+            </p>
+          </div>
+          <div className="container-profil">
+            <div className="main-left-container">
+              <BarChart
+                className="barchart-container"
+                data={tenLastDay}
+              />
+              <div className="container-line-radar-radial">
+                <LineChart
+                  className="linechart-container"
+                  data={datas?.averageDatas?.sessions}
+                />
+                <RadarChart
+                  className="radarchart-container"
+                  data={datas?.performancesDatas?.dataPerformance}
+                />
+                <RadialBarChart
+                  className="radialbarchart-container"
+                  data={datas?.userDatas?.score}
+                />
+              </div>
+            </div>
+            <div className="cards">
+              {dataCard(datas).map((card, index) => (
+                <Cards
+                  key={index}
+                  icon={card.icon}
+                  number={card.number}
+                  type={card.type}
+                  unit={card.unit}
+                  color={card.color}
+                />
+              ))}
             </div>
           </div>
-          <div className = "cards">
-            {dataCard(datas).map((card, index) => (
-              <Cards
-                key={index}
-                icon={card.icon} 
-                number={card.number} 
-                type={card.type} 
-                unit={card.unit} 
-                color={card.color}
-              />
-            ))}
-          </div>
-        </div>
-      </main>
+        </main>
+      )}
     </div>
   );
 }
-  
+
 export default Profil;
