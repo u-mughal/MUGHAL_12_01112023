@@ -11,6 +11,8 @@ import ErrorMessage from "@/ComponentsRecharts/ErrorMessage";
 import RadarChart from "@/ComponentsRecharts/RadarChart";
 import RadialBarChart from "@/ComponentsRecharts/RadialBarChart";
 import { dataCard } from "@/Components/Utils/dataCard";
+import { useNavigate } from 'react-router-dom';
+
 
 function Profil() {
   const [datas, setDatas] = useState(null);
@@ -19,6 +21,7 @@ function Profil() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [statusApi, setStatusApi] = useState(false);
   const [tenLastDay, setTenLastDay] = useState(datas);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +31,6 @@ function Profil() {
         setDatas(fetchedData);
         setTenLastDay(fetchedData?.activitiesDatas?.sessions?.slice(-10));
       } catch (err) {
-        console.log('Error caught:', err.message);
         setErrorMessage(
           err.message !== "Network Error"
             ? err.message
@@ -43,11 +45,17 @@ function Profil() {
     fetchData();
 
     const errorTimeout = setTimeout(() => {
-      setErrorMessage(null);
+      errorMessage && !errorMessage.includes('utilisateur')&&setErrorMessage(null);
     }, 4000);
 
     return () => clearTimeout(errorTimeout);
   }, [uId, statusApi, errorMessage]);
+
+  useEffect(() => {
+    if (errorMessage && errorMessage.includes('utilisateur')) {
+      setTimeout(()=>{ navigate('/');}, 4000);
+    }
+  }, [errorMessage, navigate]);
 
   if (errorMessage) return <ErrorMessage message={errorMessage} />;
 

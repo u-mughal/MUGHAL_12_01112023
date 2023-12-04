@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router';
 import Home from '@/Pages/Home';
-import Error from '@/Pages/Error';
 import Profil from '@/Pages/Profil';
 
 function PublicRouter(){
@@ -9,7 +8,7 @@ function PublicRouter(){
       <Route path="/" element={<Home/>} />
       <Route path="/Profil" element={<Home/> }/>
       <Route path="/Profil/:id" element={<Profil/>} />
-      <Route path="/*" element={<Error />}/>
+      <Route path="/*" element={<Home />}/>
     </Routes>
   );
 }
