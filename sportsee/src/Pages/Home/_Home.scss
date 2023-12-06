@@ -1,0 +1,29 @@
+/* Style du conteneur des boutons positionné au centre de l'écran */
+.buttons-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: red;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 999;
+}
+
+/* Style des boutons à l'intérieur du conteneur */
+.buttons-container button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 10px; /* Ajoute une marge des deux côtés de chaque bouton */
+}
+
+/* Style du dernier bouton à l'intérieur du conteneur */
+.buttons-container button:last-child {
+  margin-right: 10px;
+}

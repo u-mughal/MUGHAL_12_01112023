@@ -1,8 +1,9 @@
+// Styles pour la barre de navigation principale de l'en-tête.
 .header-main {
   position: fixed;
-  width:100%;
-  height:90px;
-  top:0;
+  width: 100%;
+  height: 90px;
+  top: 0;
   display: flex;
   align-items: center;
   background: black;
@@ -10,33 +11,37 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 1;
 }
+
+// Styles pour le logo dans la barre de navigation.
 .logo {
   padding: 18px 62px 12px 28px;
 }
 
+// Styles pour la barre de navigation.
 .navbar {
   width: 100%;
-  
-  margin-left:-60px;
+  margin-left: -60px;
 }
 
+// Styles pour la liste de la barre de navigation.
 .navbarList {
   display: flex;
   justify-content: space-evenly;
 }
 
+// Styles pour les éléments de la liste de la barre de navigation.
 .navbarListItem {
-  list-style-type: none;  
+  list-style-type: none;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   color: white;
   text-decoration: none;
-
 }
 
+// Styles pour les liens de la barre de navigation.
 .navbarLink {
-    color:white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }

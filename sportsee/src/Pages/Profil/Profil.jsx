@@ -1,19 +1,29 @@
+/**
+ * Composant pour afficher les informations du profil utilisateur.
+ * @module Profil
+ * @component
+ */
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDatasSection } from "@/UserData/UserDataRetrieval";
-import Header from "@/Components/Header";
-import Sidebar from "@/Components/Sidebar";
-import Loader from "@/Components/Loader";
-import BarChart from "@/ComponentsRecharts/BarChart";
-import Cards from "@/Components/Cards";
-import LineChart from "@/ComponentsRecharts/LineChart";
-import ErrorMessage from "@/ComponentsRecharts/ErrorMessage";
-import RadarChart from "@/ComponentsRecharts/RadarChart";
-import RadialBarChart from "@/ComponentsRecharts/RadialBarChart";
-import { dataCard } from "@/Components/Utils/dataCard";
+import Header from "@/Components/Header/Header";
+import Sidebar from "@/Components/Sidebar/Sidebar";
+import Loader from "@/Components/Loader/Loader";
+import BarChart from "@/Components/Graphs/BarChart";
+import Cards from "@/Components/Cards/Cards";
+import LineChart from "@/Components/Graphs/LineChart";
+import ErrorMessage from "@/Components/Error/ErrorMessage";
+import RadarChart from "@/Components/Graphs/RadarChart";
+import RadialBarChart from "@/Components/Graphs/RadialBarChart";
+import { dataCard } from "@/Components/Cards/Utils/dataCard";
 import { useNavigate } from 'react-router-dom';
 
-
+/**
+ * Composant fonctionnel représentant la page du profil utilisateur.
+ * @function Profil
+ * @returns {JSX.Element} - Composant rendu de la page du profil utilisateur.
+ */
 function Profil() {
   const [datas, setDatas] = useState(null);
   const { id: uId } = useParams();
@@ -23,43 +33,62 @@ function Profil() {
   const [tenLastDay, setTenLastDay] = useState(datas);
   const navigate = useNavigate();
 
+  /**
+   * Effet pour récupérer les données de l'utilisateur et gérer les erreurs.
+   * @function useEffect
+   * @inner
+   */
   useEffect(() => {
     const fetchData = async () => {
-      errorMessage ? setStatusApi(false) : setStatusApi(true);
       try {
+        errorMessage && setStatusApi(false);
         const fetchedData = await getDatasSection(uId, statusApi);
         setDatas(fetchedData);
         setTenLastDay(fetchedData?.activitiesDatas?.sessions?.slice(-10));
+        setStatusApi(true);
       } catch (err) {
-        setErrorMessage(
+        const error =
           err.message !== "Network Error"
             ? err.message
             : "L'API est actuellement indisponible, les données sont mockées." ||
-                "Une erreur est survenue"
-        );
+              "Une erreur est survenue";
+        setErrorMessage(error);
         setStatusApi(false);
       } finally {
         setDataLoading(false);
       }
     };
+  
     fetchData();
-
+  
     const errorTimeout = setTimeout(() => {
-      errorMessage && !errorMessage.includes('utilisateur')&&setErrorMessage(null);
+      errorMessage && !errorMessage.includes('utilisateur') && setErrorMessage(null);
     }, 4000);
-
+  
     return () => clearTimeout(errorTimeout);
-  }, [uId, statusApi, errorMessage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uId, statusApi]);
 
+  /**
+   * Effet pour rediriger vers la page d'accueil après un message d'erreur.
+   * @function useEffect
+   * @inner
+   */
   useEffect(() => {
     if (errorMessage && errorMessage.includes('utilisateur')) {
       setTimeout(()=>{ navigate('/');}, 4000);
     }
   }, [errorMessage, navigate]);
 
-  if (errorMessage) return <ErrorMessage message={errorMessage} />;
+  /**
+   * JSX rendu en fonction de différentes conditions (chargement, erreur ou succès).
+   * @returns {JSX.Element} - JSX rendu en fonction de l'état actuel.
+   */
+  if (errorMessage) return <><ErrorMessage message = {errorMessage}/></>;
 
-  if (isDataLoading) return <Loader />;
+  if (isDataLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

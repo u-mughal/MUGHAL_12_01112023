@@ -1,5 +1,9 @@
+/* Importe les fichiers et composants nécessaires pour la mise en page. */
 @import "./Global";
-@import "./Head";
-@import "./Sidebar";
-@import "./Profil";
-@import "./Cards";
+@import "@/Components/Header/Head";
+@import "@/Components/Sidebar/Sidebar";
+@import "@/Pages/Home/Home";
+@import "@/Pages/Profil/Profil";
+@import "@/Components/Error/Error";
+@import "@/Components/Cards/Cards";
+@import "@/Components/Loader/Loader";
