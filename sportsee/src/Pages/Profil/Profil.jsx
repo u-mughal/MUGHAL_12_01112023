@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { getDatasSection } from "@/UserData/UserDataRetrieval";
 import Header from "@/Components/Header/Header";
 import Sidebar from "@/Components/Sidebar/Sidebar";
-import Loader from "@/Components/Loader/Loader";
 import BarChart from "@/Components/Graphs/BarChart";
 import Cards from "@/Components/Cards/Cards";
 import LineChart from "@/Components/Graphs/LineChart";
@@ -40,25 +39,19 @@ function Profil() {
    */
   useEffect(() => {
     const fetchData = async () => {
+      errorMessage?setStatusApi(false): setStatusApi(true);
       try {
-        errorMessage && setStatusApi(false);
-        const fetchedData = await getDatasSection(uId, statusApi);
-        setDatas(fetchedData);
+        const fetchedData = await getDatasSection(uId, statusApi); 
+        
+        setDatas(fetchedData); 
         setTenLastDay(fetchedData?.activitiesDatas?.sessions?.slice(-10));
-        setStatusApi(true);
       } catch (err) {
-        const error =
-          err.message !== "Network Error"
-            ? err.message
-            : "L'API est actuellement indisponible, les données sont mockées." ||
-              "Une erreur est survenue";
-        setErrorMessage(error);
+        setErrorMessage(err.message !== "Network Error" ? err.message : "  L'API est hors service, les données sont mockées" );
         setStatusApi(false);
       } finally {
         setDataLoading(false);
       }
     };
-  
     fetchData();
   
     const errorTimeout = setTimeout(() => {
@@ -85,10 +78,7 @@ function Profil() {
    * @returns {JSX.Element} - JSX rendu en fonction de l'état actuel.
    */
   if (errorMessage) return <><ErrorMessage message = {errorMessage}/></>;
-
-  if (isDataLoading) {
-    return <Loader />;
-  }
+  if (isDataLoading) return null; 
 
   return (
     <div>
